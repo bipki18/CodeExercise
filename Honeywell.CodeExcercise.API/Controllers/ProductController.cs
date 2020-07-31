@@ -46,8 +46,8 @@ namespace Honeywell.CodeExcercise.API.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpGet("view/{name:alpha:minlength(3)}")]
-        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string? name)
+        [HttpGet("view/{name:minlength(3)}")]
+        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name="")
         {
             try
             {
