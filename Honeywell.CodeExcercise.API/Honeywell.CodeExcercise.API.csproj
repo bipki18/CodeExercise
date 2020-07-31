@@ -17,5 +17,9 @@
     <ProjectReference Include="..\Honeywell.CodeExercise.Model\Honeywell.CodeExercise.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sql Script\" />
+  </ItemGroup>
+
 
 </Project>

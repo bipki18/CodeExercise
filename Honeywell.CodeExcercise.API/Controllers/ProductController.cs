@@ -14,7 +14,7 @@ namespace Honeywell.CodeExcercise.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IItemRepository itemRepository; 
+        private readonly IItemRepository itemRepository;
 
         public ProductController(IItemRepository itemRepository)
         {
@@ -22,7 +22,12 @@ namespace Honeywell.CodeExcercise.API.Controllers
         }
 
 
- 
+        /// <summary>
+        /// This method get called on initial request from user
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
         public async Task<ActionResult> GetItems()
         {
             try
@@ -36,7 +41,12 @@ namespace Honeywell.CodeExcercise.API.Controllers
         }
 
 
-        [HttpGet("{name}")]
+        /// <summary>
+        /// This method will get called when user try to get item details based on item name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet("/api/product/{name}")]
         public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name)
         {
             try
@@ -53,7 +63,11 @@ namespace Honeywell.CodeExcercise.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// This method will add new item to existing item list
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Item>> AddItem(Item item)
         {
