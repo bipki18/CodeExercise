@@ -46,14 +46,14 @@ namespace Honeywell.CodeExcercise.API.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpGet("/api/product/{name}")]
-        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name)
+        [HttpGet("view/{name:alpha:minlength(3)}")]
+        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string? name)
         {
             try
             {
                 var result = await itemRepository.GetItemsByName(name);
 
-                if (result == null) return NotFound();
+                if (result == null || result.Count == 0) return NotFound($"Record not found for input {name} ");
 
                 return result;
             }
