@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+
 
 namespace Honeywell.CodeExcercise.API
 {
@@ -36,6 +38,22 @@ namespace Honeywell.CodeExcercise.API
             services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
             services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "CodeExercise API",
+                    Version = "v1",
+                    Description = "Description for the API goes here.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "HARMAN Connected",
+                        Email = string.Empty,
+                        Url = new Uri("https://www.harman.com/"),
+                    },
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +63,14 @@ namespace Honeywell.CodeExcercise.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeExercise API V1");
+                c.RoutePrefix = "swagger/ui";
+            });
 
             app.UseHttpsRedirection();
 
