@@ -14,25 +14,23 @@ namespace Honeywell.CodeExcercise.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IItemRepository itemRepository;
-
-        public ProductController(IItemRepository itemRepository)
+        private readonly IItemComponentRepository itemComponentRepository;
+        public ProductController(IItemComponentRepository itemComponentRepository)
         {
-            this.itemRepository = itemRepository;
+            this.itemComponentRepository = itemComponentRepository;
         }
-
 
         /// <summary>
         /// This method get called on initial request from user
         /// </summary>
         /// <returns></returns>
         /// 
-        [HttpGet]
+        [Route("")]
         public async Task<ActionResult> GetItems()
         {
             try
             {
-                return Ok(await itemRepository.GetItem());
+                return Ok(await itemComponentRepository.GetAllItem());
             }
             catch (Exception)
             {
@@ -46,12 +44,13 @@ namespace Honeywell.CodeExcercise.API.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+        [Route("view")]
         [HttpGet("view/{name:minlength(3)}")]
-        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name="")
+        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name)
         {
             try
             {
-                var result = await itemRepository.GetItemsByName(name);
+                var result = await itemComponentRepository.GetItemsByName(name ?? "");
 
                 if (result == null || result.Count == 0) return NotFound($"Record not found for input {name} ");
 
@@ -63,11 +62,11 @@ namespace Honeywell.CodeExcercise.API.Controllers
             }
         }
 
-        /// <summary>
-        /// This method will add new item to existing item list
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// This method will add new item to existing item list
+        ///// </summary>
+        ///// <param name="item"></param>
+        ///// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Item>> AddItem(Item item)
         {
@@ -76,15 +75,14 @@ namespace Honeywell.CodeExcercise.API.Controllers
                 if (item == null)
                     return BadRequest();
 
-                var createdItem = await itemRepository.AddItem(item);
+                var createdItem = await itemComponentRepository.AddNewItem(item);
 
-                return CreatedAtAction(nameof(createdItem), new { id = createdItem.Id }, createdItem);
+                return CreatedAtAction(nameof(GetItems), new { id = createdItem.Id }, createdItem);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new item record");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error creating new item record");
             }
         }
-
     }
 }

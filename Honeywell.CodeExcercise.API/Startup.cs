@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Honeywell.CodeExcercise.API.Models;
 using Honeywell.CodeExercise.Component.ItemComponent;
+using Honeywell.CodeExercise.DataBase;
+using Honeywell.CodeExercise.DataBase.ItemDataContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,9 +34,8 @@ namespace Honeywell.CodeExcercise.API
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
 
+            services.AddScoped<IItemComponentRepository, ItemComponentRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
             services.AddControllers();
 
@@ -65,12 +65,13 @@ namespace Honeywell.CodeExcercise.API
             }
 
             app.UseSwagger();
-
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeExercise API V1");
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "CodeExercise API V1");
                 c.RoutePrefix = "swagger/ui";
             });
+
+
 
             app.UseHttpsRedirection();
 

@@ -10,7 +10,7 @@ namespace Honeywell.CodeExercise.DataBase.ItemDataContext
     {
         Task<IEnumerable<Item>> GetItem();
         Task<Item> GetItem(int itemId);
-        Task<Item> GetItemsByName(string name);
+        Task<List<ItemViewModel>> GetItemsByName(string name);
         Task<Item> AddItem(Item item);
         Task<Item> UpdateItem(Item item);
         void DeleteItem(int itemId);

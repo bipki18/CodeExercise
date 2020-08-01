@@ -44,10 +44,76 @@ namespace Honeywell.CodeExercise.DataBase.ItemDataContext
             return await appDbContext.Items.FirstOrDefaultAsync(e => e.Id == itemId);
         }
 
-        public async Task<Item> GetItemsByName(string name)
+        //public async Task<Item> GetItemsByName(string name)
+        //{
+        //    return await appDbContext.Items.FirstOrDefaultAsync(e => e.Name == name);
+        //}
+
+
+        public async Task<List<ItemViewModel>> GetItemsByName(string name)
         {
-            return await appDbContext.Items.FirstOrDefaultAsync(e => e.Name == name);
+            List<ItemViewModel> itemViewModellst = new List<ItemViewModel>();
+            ItemViewModel itemViewModel = null;
+            // var result;
+            if (string.IsNullOrEmpty(name))
+            {
+
+                var act = (from i in appDbContext.Items
+                           join s in appDbContext.SubCategories on i.SubCategoryId equals s.Id
+                           join ca in appDbContext.Categories on s.CategoryId equals ca.Id
+                           select new
+                           {
+                               ItemName = i.Name,
+                               Description = i.Description,
+                               Category = ca.Name,
+                               SubCategory = s.Name,
+                           }).ToList();
+
+
+                for (int i = 0; i < act.Count; i++)
+                {
+                    itemViewModel = new ItemViewModel();
+                    itemViewModel.ItemName = (act[i].ItemName);
+                    itemViewModel.ItemDescription = act[0].Description;
+                    itemViewModel.Category = act[0].Category;
+                    itemViewModel.Subcategory = act[0].SubCategory;
+                    itemViewModellst.Add(itemViewModel);
+                }
+
+
+            }
+            else
+            {
+                var act = (from i in appDbContext.Items
+                           join s in appDbContext.SubCategories on i.SubCategoryId equals s.Id
+                           join ca in appDbContext.Categories on s.CategoryId equals ca.Id
+
+                           where i.Name == name
+                           select new
+                           {
+                               ItemName = i.Name,
+                               Description = i.Description,
+                               Category = ca.Name,
+                               SubCategory = s.Name,
+                           }).ToList();
+
+                for (int i = 0; i < act.Count; i++)
+                {
+                    itemViewModel = new ItemViewModel();
+                    itemViewModel.ItemName = (act[i].ItemName);
+                    itemViewModel.ItemDescription = act[0].Description;
+                    itemViewModel.Category = act[0].Category;
+                    itemViewModel.Subcategory = act[0].SubCategory;
+                    itemViewModellst.Add(itemViewModel);
+                }
+            }
+
+            return itemViewModellst;
         }
+
+
+
+
 
         public async Task<Item> UpdateItem(Item item)
         {

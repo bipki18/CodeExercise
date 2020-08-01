@@ -10,7 +10,7 @@ namespace Honeywell.CodeExercise.Component.ItemComponent
     {
         Task<IEnumerable<Item>> GetAllItem();
         Task<Item> GetItemById(int itemId);
-        Task<Item> GetItemsByName(string name);
+        Task<List<ItemViewModel>> GetItemsByName(string name);
         Task<Item> AddNewItem(Item item);
 
     }

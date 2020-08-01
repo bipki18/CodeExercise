@@ -16,9 +16,16 @@ namespace Honeywell.CodeExercise.Component.ItemComponent
             this.itemRepository = itemRepository;
         }
 
-        public Task<Item> AddNewItem(Item item)
+        public async Task<Item> AddNewItem(Item item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await itemRepository.AddItem(item);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<IEnumerable<Item>> GetAllItem()
@@ -38,7 +45,7 @@ namespace Honeywell.CodeExercise.Component.ItemComponent
             throw new NotImplementedException();
         }
 
-        public async Task<Item> GetItemsByName(string name)
+        public async Task<List<ItemViewModel>> GetItemsByName(string name)
         {
             try
             {
