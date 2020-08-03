@@ -74,9 +74,9 @@ namespace Honeywell.CodeExercise.DataBase.ItemDataContext
                 {
                     itemViewModel = new ItemViewModel();
                     itemViewModel.ItemName = (act[i].ItemName);
-                    itemViewModel.ItemDescription = act[0].Description;
-                    itemViewModel.Category = act[0].Category;
-                    itemViewModel.Subcategory = act[0].SubCategory;
+                    itemViewModel.ItemDescription = act[i].Description;
+                    itemViewModel.Category = act[i].Category;
+                    itemViewModel.Subcategory = act[i].SubCategory;
                     itemViewModellst.Add(itemViewModel);
                 }
 
@@ -101,9 +101,9 @@ namespace Honeywell.CodeExercise.DataBase.ItemDataContext
                 {
                     itemViewModel = new ItemViewModel();
                     itemViewModel.ItemName = (act[i].ItemName);
-                    itemViewModel.ItemDescription = act[0].Description;
-                    itemViewModel.Category = act[0].Category;
-                    itemViewModel.Subcategory = act[0].SubCategory;
+                    itemViewModel.ItemDescription = act[i].Description;
+                    itemViewModel.Category = act[i].Category;
+                    itemViewModel.Subcategory = act[i].SubCategory;
                     itemViewModellst.Add(itemViewModel);
                 }
             }
