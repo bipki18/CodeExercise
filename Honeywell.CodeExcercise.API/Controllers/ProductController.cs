@@ -46,7 +46,7 @@ namespace Honeywell.CodeExcercise.API.Controllers
         /// <returns></returns>
         [Route("view")]
         [HttpGet("view/{name:minlength(3)}")]
-        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name)
+        public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name, [FromQuery] PagingParameterModel pagingParameterModel)
         {
             try
             {
@@ -54,7 +54,27 @@ namespace Honeywell.CodeExcercise.API.Controllers
 
                 if (result == null || result.Count == 0) return NotFound($"Record not found for input {name} ");
 
-                return result;
+                int count = result.Count();
+                int CurrentPage = pagingParameterModel.pageNumber;
+                int PageSize = pagingParameterModel.pageSize;
+                int TotalCount = count;
+                int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+                var items = result.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+                var previousPage = CurrentPage > 1 ? "Yes" : "No";
+                var nextPage = CurrentPage < TotalPages ? "Yes" : "No";
+  
+                var paginationMetadata = new
+                {
+                    totalCount = TotalCount,
+                    pageSize = PageSize,
+                    currentPage = CurrentPage,
+                    totalPages = TotalPages,
+                    previousPage,
+                    nextPage
+                };
+
+                return items;
             }
             catch (Exception)
             {
