@@ -16,6 +16,18 @@ namespace Honeywell.CodeExercise.Component.ItemComponent
             this.itemRepository = itemRepository;
         }
 
+        public async Task<Category> AddNewCategory(Category category)
+        {
+            try
+            {
+                return await itemRepository.AddNewCategory(category);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<Item> AddNewItem(Item item)
         {
             try
@@ -26,6 +38,11 @@ namespace Honeywell.CodeExercise.Component.ItemComponent
             {
                 throw;
             }
+        }
+
+        public Task<SubCategory> AddNewSubCategory(SubCategory subCategory)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Item>> GetAllItem()

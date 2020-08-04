@@ -13,5 +13,7 @@ namespace Honeywell.CodeExercise.Component.ItemComponent
         Task<List<ItemViewModel>> GetItemsByName(string name);
         Task<Item> AddNewItem(Item item);
 
+        Task<Category> AddNewCategory(Category category);
+
     }
 }

@@ -67,6 +67,8 @@ namespace Honeywell.CodeExcercise.API.Controllers
         ///// </summary>
         ///// <param name="item"></param>
         ///// <returns></returns>
+        /// <summary>
+        [Route("AddItem")]
         [HttpPost]
         public async Task<ActionResult<Item>> AddItem(Item item)
         {
@@ -84,5 +86,29 @@ namespace Honeywell.CodeExcercise.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error creating new item record");
             }
         }
+
+        [Route("AddCategory")]
+        [HttpPost]
+        public async Task<ActionResult<Category>> AddNewCategory(Category category)
+        {
+            try
+            {
+                if(category == null) return BadRequest();
+
+                var createCategory = await itemComponentRepository.AddNewCategory(category);
+
+                return CreatedAtAction(nameof(GetItems), new { id = createCategory.Name }, createCategory);
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error creating new item record");
+
+            }
+
+        }
+
+            
+     
+
     }
 }

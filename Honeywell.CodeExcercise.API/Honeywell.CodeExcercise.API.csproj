@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Honeywell.CodeExercise.Model" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
       <PrivateAssets>all</PrivateAssets>
@@ -22,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Honeywell.CodeExercise.Component\Honeywell.CodeExercise.Component.csproj" />
-    <ProjectReference Include="..\Honeywell.CodeExercise.Model\Honeywell.CodeExercise.Model.csproj" />
   </ItemGroup>
 
 

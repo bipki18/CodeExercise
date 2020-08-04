@@ -14,5 +14,7 @@ namespace Honeywell.CodeExercise.DataBase.ItemDataContext
         Task<Item> AddItem(Item item);
         Task<Item> UpdateItem(Item item);
         void DeleteItem(int itemId);
+
+        Task<Category> AddNewCategory(Category category);
     }
 }
