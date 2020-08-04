@@ -67,8 +67,8 @@ namespace Honeywell.CodeExcercise.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("swagger/v1/swagger.json", "CodeExercise API V1");
-                c.RoutePrefix = "swagger/ui";
+                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "CodeExercise API V1");
+                 c.RoutePrefix = "swagger/ui";
             });
 
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Honeywell.CodeExcercise.API.Controllers
@@ -25,7 +26,7 @@ namespace Honeywell.CodeExcercise.API.Controllers
         /// </summary>
         /// <returns></returns>
         /// 
-        [Route("")]
+        [NonAction]
         public async Task<ActionResult> GetItems()
         {
             try
@@ -44,8 +45,10 @@ namespace Honeywell.CodeExcercise.API.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+        [Route("")]
         [Route("view")]
-        [HttpGet("view/{name:minlength(3)}")]
+        [Route("view/{name:minlength(3)}")]
+        [HttpGet]
         public async Task<ActionResult<List<ItemViewModel>>> GetItemsByName(string name, [FromQuery] PagingParameterModel pagingParameterModel)
         {
             try
@@ -77,7 +80,8 @@ namespace Honeywell.CodeExcercise.API.Controllers
 
                 var createdItem = await itemComponentRepository.AddNewItem(item);
 
-                return CreatedAtAction(nameof(GetItems), new { id = createdItem.Id }, createdItem);
+                // return CreatedAtAction(nameof(GetItems), new { id = createdItem.Id }, createdItem);
+                return CreatedAtAction("Record addedd successfully.", new { id = createdItem.Id }, createdItem);
             }
             catch (Exception)
             {
