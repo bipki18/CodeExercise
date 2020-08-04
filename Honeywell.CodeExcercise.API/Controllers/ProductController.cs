@@ -50,31 +50,11 @@ namespace Honeywell.CodeExcercise.API.Controllers
         {
             try
             {
-                var result = await itemComponentRepository.GetItemsByName(name ?? "");
+                var result = await itemComponentRepository.GetItemsByName(name ?? "", pagingParameterModel);
 
                 if (result == null || result.Count == 0) return NotFound($"Record not found for input {name} ");
 
-                int count = result.Count();
-                int CurrentPage = pagingParameterModel.pageNumber;
-                int PageSize = pagingParameterModel.pageSize;
-                int TotalCount = count;
-                int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
-
-                var items = result.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
-                var previousPage = CurrentPage > 1 ? "Yes" : "No";
-                var nextPage = CurrentPage < TotalPages ? "Yes" : "No";
-  
-                var paginationMetadata = new
-                {
-                    totalCount = TotalCount,
-                    pageSize = PageSize,
-                    currentPage = CurrentPage,
-                    totalPages = TotalPages,
-                    previousPage,
-                    nextPage
-                };
-
-                return items;
+                return result;
             }
             catch (Exception)
             {
@@ -104,5 +84,12 @@ namespace Honeywell.CodeExcercise.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error creating new item record");
             }
         }
+
+
+
+
+
+
+
     }
 }

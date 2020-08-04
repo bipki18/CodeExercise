@@ -2,6 +2,7 @@
 using Honeywell.CodeExercise.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,11 +46,39 @@ namespace Honeywell.CodeExercise.Component.ItemComponent
             throw new NotImplementedException();
         }
 
-        public async Task<List<ItemViewModel>> GetItemsByName(string name)
+        public async Task<List<ItemViewModel>> GetItemsByName(string name, PagingParameterModel pagingParameterModel)
         {
             try
             {
-                return await itemRepository.GetItemsByName(name);
+                var result = await itemRepository.GetItemsByName(name);
+
+                if (result == null)
+                {
+                    throw new NotImplementedException();
+                }
+
+                int count = result.Count;
+                int CurrentPage = pagingParameterModel.pageNumber;
+                int PageSize = pagingParameterModel.pageSize;
+                int TotalCount = count;
+                int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+                var items = result.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+                var previousPage = CurrentPage > 1 ? "Yes" : "No";
+                var nextPage = CurrentPage < TotalPages ? "Yes" : "No";
+
+                var paginationMetadata = new
+                {
+                    totalCount = TotalCount,
+                    pageSize = PageSize,
+                    currentPage = CurrentPage,
+                    totalPages = TotalPages,
+                    previousPage,
+                    nextPage
+                };
+
+                return items;
+
             }
             catch (Exception)
             {
