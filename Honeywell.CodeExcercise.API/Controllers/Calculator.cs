@@ -33,7 +33,7 @@ namespace Honeywell.CodeExcercise.API.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<int> GetMultiplication(int i, int j)
         {
-            return (i * j);
+            return (i * j); 
         }
 
         [Route("div")]
