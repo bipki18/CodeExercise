@@ -54,6 +54,12 @@ namespace Honeywell.CodeExcercise.API
                     },
                 });
             });
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +84,11 @@ namespace Honeywell.CodeExcercise.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(x => x
+          .AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,6 +1,7 @@
 ﻿using Honeywell.CodeExcercise.API.Models;
 using Honeywell.CodeExercise.Component.ItemComponent;
 using Honeywell.CodeExercise.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Honeywell.CodeExcercise.API.Controllers
 {
+   
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
