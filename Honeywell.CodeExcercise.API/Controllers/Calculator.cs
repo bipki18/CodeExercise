@@ -44,5 +44,15 @@ namespace Honeywell.CodeExcercise.API.Controllers
             return (i / j);
         }
 
+        [Route("login")]
+        [HttpGet]
+        [EnableCors("AllowOrigin")]
+        public async Task<bool> ValidateUser(string uname, string password)
+        {
+            return true;
+        }
+
+
+
     }
 }
